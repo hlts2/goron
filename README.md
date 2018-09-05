@@ -1,2 +1,2 @@
 # goron
-job scheduler like cron written in golang
+goron is job scheduler like cron written in golang

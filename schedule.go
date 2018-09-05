@@ -43,7 +43,52 @@ func NewSchedule(specs []string) (*Schedule, error) {
 		weeks:   make(Specs, 0, DefaultSpecCount),
 	}
 
+	for i, spec := range specs {
+		result, err := parse(spec, s.Field(i))
+		if err != nil {
+			return nil, err
+		}
+
+		s.SetField(i, result)
+	}
+
 	return s, nil
+}
+
+// TODO 実装方法を改善する
+
+// Field returns time spec field
+func (s *Schedule) Field(num int) Specs {
+	switch num {
+	case 0:
+		return s.minutes
+	case 1:
+		return s.hours
+	case 2:
+		return s.days
+	case 3:
+		return s.months
+	case 4:
+		return s.weeks
+	default:
+		return Specs{}
+	}
+}
+
+// SetField sets time spec field
+func (s *Schedule) SetField(num int, specs Specs) {
+	switch num {
+	case 0:
+		s.minutes = specs
+	case 1:
+		s.hours = specs
+	case 2:
+		s.days = specs
+	case 3:
+		s.months = specs
+	case 4:
+		s.weeks = specs
+	}
 }
 
 func parse(spec string, specs Specs) (Specs, error) {

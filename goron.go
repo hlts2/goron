@@ -8,25 +8,16 @@ import (
 // DefaultJobCount is the number of job
 const DefaultJobCount int = 1000
 
-// const
-const (
-	Minute = iota
-	Hour
-	Day
-	Month
-	Week
-)
-
 type (
 	// JobHandler represents job handler type for goron
 	JobHandler func() error
 
 	// Job represents job info
 	Job struct {
-		g       *goron
-		spec    []string
-		handler JobHandler
-		finish  chan bool
+		g        *goron
+		schedule Schedule
+		handler  JobHandler
+		finish   chan bool
 	}
 
 	// Jobs is Job slice type
@@ -135,7 +126,11 @@ func (g *goron) With(handlers ...JobHandler) {
 		panic(g.err)
 	}
 
-	g.addJob(g.spec, handlers...)
+	err := g.addJob(g.spec, handlers...)
+	if err != nil {
+		panic(err)
+	}
+
 	g.spec = initSpec()
 	g.err = nil
 }
@@ -145,20 +140,31 @@ func (g *goron) AddJob(spec string, handlers ...JobHandler) {
 		panic(g.err)
 	}
 
-	g.addJob(strings.Split(spec, " "), handlers...)
+	err := g.addJob(strings.Split(spec, " "), handlers...)
+	if err != nil {
+		panic(err)
+	}
+
 	g.spec = initSpec()
 	g.err = nil
 }
 
-func (g *goron) addJob(spec []string, handlers ...JobHandler) {
+func (g *goron) addJob(spec []string, handlers ...JobHandler) error {
+	schedule, err := parse(spec)
+	if err != nil {
+		return err
+	}
+
 	for _, handler := range handlers {
 		g.jobs = append(g.jobs, Job{
-			g:       g,
-			spec:    spec,
-			handler: handler,
-			finish:  make(chan bool),
+			g:        g,
+			schedule: schedule,
+			handler:  handler,
+			finish:   make(chan bool),
 		})
 	}
+
+	return nil
 }
 
 func (g *goron) JobCount() int {

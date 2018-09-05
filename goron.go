@@ -72,6 +72,7 @@ func New() Goron {
 }
 
 func initSpec() []string {
+	// 0: minute, 1: hour, 2: day, 3, month, 4: week
 	return []string{"*", "*", "*", "*"}
 }
 

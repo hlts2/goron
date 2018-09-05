@@ -90,7 +90,3 @@ func (s *Schedule) SetField(num int, specs Specs) {
 		s.weeks = specs
 	}
 }
-
-func parse(spec string, specs Specs) (Specs, error) {
-	return nil, nil
-}

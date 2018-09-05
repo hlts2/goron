@@ -66,12 +66,12 @@ type (
 // New returns Goron(*goron) object
 func New() Goron {
 	return &goron{
-		strSpecs: initSpec(),
+		strSpecs: initStrSpecs(),
 		jobs:     make(Jobs, 0, DefaultJobCount),
 	}
 }
 
-func initSpec() []string {
+func initStrSpecs() []string {
 	// 0: minute, 1: hour, 2: day, 3, month, 4: week
 	return []string{"*", "*", "*", "*"}
 }
@@ -127,7 +127,7 @@ func (g *goron) With(handlers ...JobHandler) {
 		panic(err)
 	}
 
-	g.strSpecs = initSpec()
+	g.strSpecs = initStrSpecs()
 }
 
 func (g *goron) AddJob(strSpec string, handlers ...JobHandler) {
@@ -136,7 +136,7 @@ func (g *goron) AddJob(strSpec string, handlers ...JobHandler) {
 		panic(err)
 	}
 
-	g.strSpecs = initSpec()
+	g.strSpecs = initStrSpecs()
 }
 
 func (g *goron) addJob(strSpecs []string, handlers ...JobHandler) error {

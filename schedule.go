@@ -60,15 +60,15 @@ func NewSchedule(strSpecs []string) (*Schedule, error) {
 // Field returns time spec field
 func (s *Schedule) Field(num int) Specs {
 	switch num {
-	case 0:
+	case Minute:
 		return s.minutes
-	case 1:
+	case Hour:
 		return s.hours
-	case 2:
+	case Day:
 		return s.days
-	case 3:
+	case Month:
 		return s.months
-	case 4:
+	case Week:
 		return s.weeks
 	default:
 		return Specs{}
@@ -78,15 +78,15 @@ func (s *Schedule) Field(num int) Specs {
 // SetField sets time spec field
 func (s *Schedule) SetField(num int, specs Specs) {
 	switch num {
-	case 0:
+	case Minute:
 		s.minutes = specs
-	case 1:
+	case Hour:
 		s.hours = specs
-	case 2:
+	case Day:
 		s.days = specs
-	case 3:
+	case Month:
 		s.months = specs
-	case 4:
+	case Week:
 		s.weeks = specs
 	}
 }

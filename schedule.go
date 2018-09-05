@@ -22,8 +22,8 @@ type (
 		minutes []Spec
 		hours   []Spec
 		day     []Spec
-		Month   []Spec
-		Week    []Spec
+		month   []Spec
+		week    []Spec
 	}
 )
 

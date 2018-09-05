@@ -129,8 +129,8 @@ func (g *goron) With(handlers ...JobHandler) {
 	g.spec = initSpec()
 }
 
-func (g *goron) AddJob(spec string, handlers ...JobHandler) {
-	err := g.addJob(strings.Split(spec, " "), handlers...)
+func (g *goron) AddJob(specs string, handlers ...JobHandler) {
+	err := g.addJob(strings.Split(specs, " "), handlers...)
 	if err != nil {
 		panic(err)
 	}
@@ -138,8 +138,8 @@ func (g *goron) AddJob(spec string, handlers ...JobHandler) {
 	g.spec = initSpec()
 }
 
-func (g *goron) addJob(spec []string, handlers ...JobHandler) error {
-	schedule, err := parse(spec)
+func (g *goron) addJob(specs []string, handlers ...JobHandler) error {
+	schedule, err := parse(specs)
 	if err != nil {
 		return err
 	}

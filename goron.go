@@ -30,25 +30,25 @@ type (
 	Goron interface {
 
 		// Week sets spec of week
-		Week(spec string) Goron
+		Week(strSpec string) Goron
 
 		// Month sets spec of month
-		Month(spec string) Goron
+		Month(strSpec string) Goron
 
 		// Day sets sepec of day
-		Day(spec string) Goron
+		Day(strSpec string) Goron
 
 		// Hour sets spec of hour
-		Hour(spec string) Goron
+		Hour(strSpec string) Goron
 
 		// Minute sets spec of minute
-		Minute(spec string) Goron
+		Minute(strSpec string) Goron
 
 		// With register job handler
 		With(handlers ...JobHandler)
 
 		// AddJob register job handler with spec
-		AddJob(spec string, handlers ...JobHandler)
+		AddJob(strSpec string, handlers ...JobHandler)
 
 		// JobCount returns the number of job
 		JobCount() int
@@ -58,16 +58,16 @@ type (
 	}
 
 	goron struct {
-		spec []string
-		jobs Jobs
+		strSpecs []string
+		jobs     Jobs
 	}
 )
 
 // New returns Goron(*goron) object
 func New() Goron {
 	return &goron{
-		spec: initSpec(),
-		jobs: make(Jobs, 0, DefaultJobCount),
+		strSpecs: initSpec(),
+		jobs:     make(Jobs, 0, DefaultJobCount),
 	}
 }
 
@@ -75,71 +75,71 @@ func initSpec() []string {
 	return []string{"*", "*", "*", "*"}
 }
 
-func (g *goron) Minute(spec string) Goron {
+func (g *goron) Minute(strSpec string) Goron {
 	if len(g.jobs) < Minute {
 		return g
 	}
 
-	g.spec[Minute] = spec
+	g.strSpecs[Minute] = strSpec
 	return g
 }
 
-func (g *goron) Hour(spec string) Goron {
+func (g *goron) Hour(strSpec string) Goron {
 	if len(g.jobs) < Hour {
 		return g
 	}
 
-	g.spec[Hour] = spec
+	g.strSpecs[Hour] = strSpec
 	return g
 }
 
-func (g *goron) Day(spec string) Goron {
+func (g *goron) Day(strSpec string) Goron {
 	if len(g.jobs) < Day {
 		return g
 	}
 
-	g.spec[Day] = spec
+	g.strSpecs[Day] = strSpec
 	return g
 }
 
-func (g *goron) Month(spec string) Goron {
+func (g *goron) Month(strSpec string) Goron {
 	if len(g.jobs) < Month {
 		return g
 	}
 
-	g.spec[Month] = spec
+	g.strSpecs[Month] = strSpec
 	return g
 }
 
-func (g *goron) Week(spec string) Goron {
+func (g *goron) Week(strSpec string) Goron {
 	if len(g.jobs) < Week {
 		return g
 	}
 
-	g.spec[Week] = spec
+	g.strSpecs[Week] = strSpec
 	return g
 }
 
 func (g *goron) With(handlers ...JobHandler) {
-	err := g.addJob(g.spec, handlers...)
+	err := g.addJob(g.strSpecs, handlers...)
 	if err != nil {
 		panic(err)
 	}
 
-	g.spec = initSpec()
+	g.strSpecs = initSpec()
 }
 
-func (g *goron) AddJob(specs string, handlers ...JobHandler) {
-	err := g.addJob(strings.Split(specs, " "), handlers...)
+func (g *goron) AddJob(strSpec string, handlers ...JobHandler) {
+	err := g.addJob(strings.Split(strSpec, " "), handlers...)
 	if err != nil {
 		panic(err)
 	}
 
-	g.spec = initSpec()
+	g.strSpecs = initSpec()
 }
 
-func (g *goron) addJob(specs []string, handlers ...JobHandler) error {
-	schedule, err := NewSchedule(specs)
+func (g *goron) addJob(strSpecs []string, handlers ...JobHandler) error {
+	schedule, err := NewSchedule(strSpecs)
 	if err != nil {
 		return err
 	}

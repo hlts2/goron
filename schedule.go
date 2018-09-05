@@ -34,7 +34,7 @@ type (
 )
 
 // NewSchedule returns *Schedule object
-func NewSchedule(specs []string) (*Schedule, error) {
+func NewSchedule(strSpecs []string) (*Schedule, error) {
 	s := &Schedule{
 		minutes: make(Specs, 0, DefaultSpecCount),
 		hours:   make(Specs, 0, DefaultSpecCount),
@@ -43,13 +43,13 @@ func NewSchedule(specs []string) (*Schedule, error) {
 		weeks:   make(Specs, 0, DefaultSpecCount),
 	}
 
-	for i, spec := range specs {
-		result, err := parse(spec, s.Field(i))
+	for i, strSpec := range strSpecs {
+		spec, err := parse(strSpec, s.Field(i))
 		if err != nil {
 			return nil, err
 		}
 
-		s.SetField(i, result)
+		s.SetField(i, spec)
 	}
 
 	return s, nil

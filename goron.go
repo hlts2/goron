@@ -1,6 +1,7 @@
 package goron
 
 import (
+	"strings"
 	"time"
 )
 
@@ -136,6 +137,7 @@ func (g *goron) With(handlers ...JobHandler) {
 
 	g.addJob(g.spec, handlers...)
 	g.spec = initSpec()
+	g.err = nil
 }
 
 func (g *goron) AddJob(spec string, handlers ...JobHandler) {
@@ -143,8 +145,9 @@ func (g *goron) AddJob(spec string, handlers ...JobHandler) {
 		panic(g.err)
 	}
 
-	g.addJob(g.spec, handlers...)
+	g.addJob(strings.Split(spec, " "), handlers...)
 	g.spec = initSpec()
+	g.err = nil
 }
 
 func (g *goron) addJob(spec []string, handlers ...JobHandler) {

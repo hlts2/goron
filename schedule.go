@@ -20,27 +20,32 @@ type (
 		wildcard string
 	}
 
+	// Specs is spec slice type
+	Specs []Spec
+
 	// Schedule represents time schedule
 	Schedule struct {
-		minutes []Spec
-		hours   []Spec
-		days    []Spec
-		months  []Spec
-		weeks   []Spec
+		minutes Specs
+		hours   Specs
+		days    Specs
+		months  Specs
+		weeks   Specs
 	}
 )
 
 // NewSchedule returns *Schedule object
-func NewSchedule() *Schedule {
-	return &Schedule{
-		minutes: make([]Spec, 0, DefaultSpecCount),
-		hours:   make([]Spec, 0, DefaultSpecCount),
-		days:    make([]Spec, 0, DefaultSpecCount),
-		months:  make([]Spec, 0, DefaultSpecCount),
-		weeks:   make([]Spec, 0, DefaultSpecCount),
+func NewSchedule(specs []string) (*Schedule, error) {
+	s := &Schedule{
+		minutes: make(Specs, 0, DefaultSpecCount),
+		hours:   make(Specs, 0, DefaultSpecCount),
+		days:    make(Specs, 0, DefaultSpecCount),
+		months:  make(Specs, 0, DefaultSpecCount),
+		weeks:   make(Specs, 0, DefaultSpecCount),
 	}
+
+	return s, nil
 }
 
-func parse(spec []string) (*Schedule, error) {
+func parse(spec string, specs Specs) (Specs, error) {
 	return nil, nil
 }

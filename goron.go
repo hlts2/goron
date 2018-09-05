@@ -139,7 +139,7 @@ func (g *goron) AddJob(specs string, handlers ...JobHandler) {
 }
 
 func (g *goron) addJob(specs []string, handlers ...JobHandler) error {
-	schedule, err := parse(specs)
+	schedule, err := NewSchedule(specs)
 	if err != nil {
 		return err
 	}

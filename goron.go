@@ -52,6 +52,7 @@ type (
 		mu   *sync.Mutex
 		spec []string
 		jobs Jobs
+		err  error
 	}
 )
 
@@ -114,11 +115,19 @@ func (g *goron) Week(spec string) Goron {
 }
 
 func (g *goron) With(handlers ...JobHandler) {
+	if g.err != nil {
+		panic(g.err)
+	}
+
 	g.addJob(g.spec, handlers...)
 	g.spec = initSpec()
 }
 
 func (g *goron) AddJob(spec string, handlers ...JobHandler) {
+	if g.err != nil {
+		panic(g.err)
+	}
+
 	g.addJob(g.spec, handlers...)
 	g.spec = initSpec()
 }

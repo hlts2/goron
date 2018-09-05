@@ -1,5 +1,8 @@
 package goron
 
+// DefaultSpecCount represents the default spec count
+const DefaultSpecCount = 5
+
 // const value for date
 const (
 	Minute = iota
@@ -21,12 +24,23 @@ type (
 	Schedule struct {
 		minutes []Spec
 		hours   []Spec
-		day     []Spec
-		month   []Spec
-		week    []Spec
+		days    []Spec
+		months  []Spec
+		weeks   []Spec
 	}
 )
 
-func parse(spec []string) (Schedule, error) {
-	return Schedule{}, nil
+// NewSchedule returns *Schedule object
+func NewSchedule() *Schedule {
+	return &Schedule{
+		minutes: make([]Spec, 0, DefaultSpecCount),
+		hours:   make([]Spec, 0, DefaultSpecCount),
+		days:    make([]Spec, 0, DefaultSpecCount),
+		months:  make([]Spec, 0, DefaultSpecCount),
+		weeks:   make([]Spec, 0, DefaultSpecCount),
+	}
+}
+
+func parse(spec []string) (*Schedule, error) {
+	return nil, nil
 }

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// DefaultJobCount is the number of job
+// DefaultJobCount represents the default job count
 const DefaultJobCount int = 1000
 
 type (
@@ -15,7 +15,7 @@ type (
 	// Job represents job info
 	Job struct {
 		g        *goron
-		schedule Schedule
+		schedule *Schedule
 		handler  JobHandler
 		finish   chan bool
 	}

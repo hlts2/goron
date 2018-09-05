@@ -36,14 +36,32 @@ type (
 
 	// Goron is base goron interface
 	Goron interface {
+
+		// Week sets spec of week
 		Week(spec string) Goron
+
+		// Month sets spec of month
 		Month(spec string) Goron
+
+		// Day sets sepec of day
 		Day(spec string) Goron
+
+		// Hour sets spec of hour
 		Hour(spec string) Goron
+
+		// Minute sets spec of minute
 		Minute(spec string) Goron
+
+		// With register job handler
 		With(handlers ...JobHandler)
+
+		// AddJob register job handler with spec
 		AddJob(spec string, handlers ...JobHandler)
+
+		// JobCount returns the number of job
 		JobCount() int
+
+		// Run starts deamon
 		Run()
 	}
 

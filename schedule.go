@@ -55,8 +55,6 @@ func NewSchedule(strSpecs []string) (*Schedule, error) {
 	return s, nil
 }
 
-// TODO 実装方法を改善する
-
 // Field returns time spec field
 func (s *Schedule) Field(num int) Specs {
 	switch num {

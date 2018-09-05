@@ -1,7 +1,6 @@
 package goron
 
 import (
-	"sync"
 	"time"
 )
 
@@ -49,7 +48,6 @@ type (
 	}
 
 	goron struct {
-		mu   *sync.Mutex
 		spec []string
 		jobs Jobs
 		err  error
@@ -59,9 +57,8 @@ type (
 // New returns Goron(*goron) object
 func New() Goron {
 	return &goron{
-		mu:   new(sync.Mutex),
-		jobs: make(Jobs, 0, DefaultJobCount),
 		spec: initSpec(),
+		jobs: make(Jobs, 0, DefaultJobCount),
 	}
 }
 

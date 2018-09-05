@@ -60,7 +60,6 @@ type (
 	goron struct {
 		spec []string
 		jobs Jobs
-		err  error
 	}
 )
 
@@ -122,31 +121,21 @@ func (g *goron) Week(spec string) Goron {
 }
 
 func (g *goron) With(handlers ...JobHandler) {
-	if g.err != nil {
-		panic(g.err)
-	}
-
 	err := g.addJob(g.spec, handlers...)
 	if err != nil {
 		panic(err)
 	}
 
 	g.spec = initSpec()
-	g.err = nil
 }
 
 func (g *goron) AddJob(spec string, handlers ...JobHandler) {
-	if g.err != nil {
-		panic(g.err)
-	}
-
 	err := g.addJob(strings.Split(spec, " "), handlers...)
 	if err != nil {
 		panic(err)
 	}
 
 	g.spec = initSpec()
-	g.err = nil
 }
 
 func (g *goron) addJob(spec []string, handlers ...JobHandler) error {
